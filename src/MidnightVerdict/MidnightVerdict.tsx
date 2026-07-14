@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Leaderboard, useGameScore } from '@shared/leaderboard'
 import type { LeaderboardEntry } from '@shared/leaderboard'
 import { telegramId, useGameEvent } from '@shared/runtime'
+import { CUSTOMERS } from './customers'
 import { useMidnightVerdict } from './hooks/useMidnightVerdict'
 import { locale, t } from './i18n'
 import { CloseIcon, MutedIcon, PhoneIcon, RankIcon, SearchIcon, SoundIcon } from './components/Icons'
@@ -9,6 +10,7 @@ import type { ShiftSummary } from './types'
 import './MidnightVerdict.less'
 
 const asset = (name: string) => `${import.meta.env.BASE_URL}img/${name}`
+const posterAsset = `${import.meta.env.BASE_URL}poster.png`
 const POSTER_URL = 'https://yinxinghuan.github.io/midnight-verdict/poster.png'
 
 function gradeShift(summary: ShiftSummary): 'S' | 'A' | 'B' | 'C' | 'D' {
@@ -49,6 +51,16 @@ export default function MidnightVerdict() {
   useEffect(() => {
     void refreshLeaderboard()
   }, [refreshLeaderboard])
+
+  useEffect(() => {
+    const sources = CUSTOMERS.flatMap((item) => [item.normalAsset, item.revealedAsset].filter(Boolean) as string[])
+    const preloaders = sources.map((source) => {
+      const image = new Image()
+      image.src = asset(source)
+      return image
+    })
+    return () => preloaders.forEach((image) => { image.onload = null; image.onerror = null })
+  }, [])
 
   useEffect(() => {
     if (game.phase === 'start') submittedSummaryRef.current = null
@@ -120,18 +132,15 @@ export default function MidnightVerdict() {
 
       {game.phase === 'start' && (
         <section className="mv-start">
-          <header className="mv-start__topline"><span>{t('start.kicker')}</span>{soundButton}</header>
-          <div className="mv-start__store" aria-hidden="true">
-            <div className="mv-start__shelves"><i/><i/><i/><i/><i/><i/></div>
-            <div className="mv-start__counter"><span>02:17</span></div>
+          <div className="mv-start__hero">
+            <img src={posterAsset} alt={t('start.posterAlt')} draggable={false} />
+            <span>{t('start.hook')}</span>
           </div>
-          <div className="mv-start__receipt">
-            <p>{t('subtitle')}</p>
+          <div className="mv-start__console">
+            <div className="mv-start__meta"><span>{t('subtitle')}</span><b>{t('start.best')} · {game.bestScore.toString().padStart(4, '0')}</b>{soundButton}</div>
             <h1>{t('title')}</h1>
-            <div className="mv-barcode" aria-hidden="true" />
             <p className="mv-start__copy">{t('start.copy')}</p>
             <button className="mv-button mv-button--primary" type="button" onPointerDown={game.beginBriefing}>{t('start.button')}</button>
-            <small>{t('start.best')} · {game.bestScore.toString().padStart(4, '0')}</small>
             <ChampionPill champion={champion} onOpen={() => setShowLeaderboard(true)} />
           </div>
         </section>
@@ -168,8 +177,7 @@ export default function MidnightVerdict() {
               {game.nightRules.map((rule) => <span key={rule} title={t(`rules.${rule}`)}>{t(`rules.${rule}.short`)}</span>)}
             </div>
             <div className="mv-scene__freezer" aria-hidden="true"><i/><i/><i/></div>
-            <img className="mv-scene__customer mv-scene__customer--normal" src={asset(normalCustomer)} alt="" draggable={false}/>
-            <img className="mv-scene__customer mv-scene__customer--revealed" src={asset(revealedCustomer)} alt="" draggable={false}/>
+            <CustomerPortrait key={customer.id} normal={normalCustomer} revealed={revealedCustomer} />
             <div className="mv-scene__counter" aria-hidden="true"><div className="mv-scene__display">{t('hud.score')} {game.score.toString().padStart(4, '0')}</div></div>
             {game.phase === 'playing' && customer.clues.map((clue) => (
               <button
@@ -275,6 +283,15 @@ export default function MidnightVerdict() {
       <img className="mv__watermark" src={asset('aigram.svg')} alt="" draggable={false}/>
     </main>
   )
+}
+
+function CustomerPortrait({ normal, revealed }: { normal: string; revealed: string }) {
+  const [ready, setReady] = useState(false)
+  return <>
+    <img className="mv-scene__customer mv-scene__customer--normal" src={asset(normal)} alt="" draggable={false} onLoad={() => setReady(true)} onError={() => setReady(true)} />
+    <img className="mv-scene__customer mv-scene__customer--revealed" src={asset(revealed)} alt="" draggable={false} />
+    <div className={`mv-customer-load ${ready ? 'is-ready' : ''}`} aria-hidden="true"><span>{t('shift.nextCustomer')}</span></div>
+  </>
 }
 
 function ChampionPill({ champion, onOpen }: { champion: LeaderboardEntry | null; onOpen: () => void }) {
