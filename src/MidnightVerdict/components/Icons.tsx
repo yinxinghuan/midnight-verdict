@@ -22,3 +22,6 @@ export function PhoneIcon({ className }: IconProps) {
   return <svg className={className} viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 3.5 10 8 7.8 9.8c1.3 2.8 3.6 5.1 6.4 6.4L16 14l4.5 2.8-.8 3.2c-.2.7-.8 1.1-1.5 1-8-.9-14.3-7.2-15.2-15.2-.1-.7.3-1.3 1-1.5l3.2-.8Z"/></svg>
 }
 
+export function RankIcon({ className }: IconProps) {
+  return <svg className={className} viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M9 18h6M12 13v5M7 6H4v2a4 4 0 0 0 4 4M17 6h3v2a4 4 0 0 1-4 4"/></svg>
+}

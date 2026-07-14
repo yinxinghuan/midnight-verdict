@@ -1,12 +1,17 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createShiftDeck } from '../customers'
 import type { CustomerSpec } from '../customers'
-import type { GamePhase, ShiftSummary, Verdict, VerdictResult } from '../types'
+import type { GamePhase, NightRuleId, RewardChoice, ShiftSummary, Verdict, VerdictResult } from '../types'
 import { sounds } from '../utils/sounds'
 
 const ROUND_SECONDS = 18
 const BEST_KEY = 'midnight_verdict_best'
 const MUTED_KEY = 'midnight_verdict_muted'
+const NIGHT_RULES: NightRuleId[] = ['mirror', 'paper', 'physics', 'timing']
+
+function drawNightRules(): NightRuleId[] {
+  return [...NIGHT_RULES].sort(() => Math.random() - 0.5).slice(0, 2)
+}
 
 export function useMidnightVerdict() {
   const [phase, setPhase] = useState<GamePhase>('start')
@@ -25,15 +30,20 @@ export function useMidnightVerdict() {
   const [streak, setStreak] = useState(0)
   const [maxStreak, setMaxStreak] = useState(0)
   const [managerUsed, setManagerUsed] = useState(false)
+  const [managerEverUsed, setManagerEverUsed] = useState(false)
+  const [nightRules, setNightRules] = useState<NightRuleId[]>(() => drawNightRules())
+  const [rewardPending, setRewardPending] = useState(false)
+  const [nextRoundBonus, setNextRoundBonus] = useState(0)
+  const [deepInspectPulse, setDeepInspectPulse] = useState(0)
   const [bestScore, setBestScore] = useState(() => Number(localStorage.getItem(BEST_KEY) ?? 0))
   const [muted, setMuted] = useState(() => localStorage.getItem(MUTED_KEY) === '1')
   const submissionLock = useRef(false)
   const lastTick = useRef(ROUND_SECONDS)
   const currentCustomer = deck[currentIndex]
 
-  const resetCustomer = useCallback(() => {
-    setTimeLeft(ROUND_SECONDS)
-    lastTick.current = ROUND_SECONDS
+  const resetCustomer = useCallback((seconds = ROUND_SECONDS) => {
+    setTimeLeft(seconds)
+    lastTick.current = seconds
     setCheckedClues([])
     setActiveClue(null)
     setResult(null)
@@ -56,6 +66,11 @@ export function useMidnightVerdict() {
     setStreak(0)
     setMaxStreak(0)
     setManagerUsed(false)
+    setManagerEverUsed(false)
+    setNightRules(drawNightRules())
+    setRewardPending(false)
+    setNextRoundBonus(0)
+    setDeepInspectPulse(0)
     setSummary(null)
     resetCustomer()
     setPhase('playing')
@@ -68,10 +83,16 @@ export function useMidnightVerdict() {
 
   const openClue = useCallback((index: number) => {
     if (phase !== 'playing' || suspended || submissionLock.current) return
+    const isNewDeepInspect = !checkedClues.includes(index) && checkedClues.length >= 2
+    if (isNewDeepInspect) {
+      setTimeLeft((current) => Math.max(0.1, current - 2))
+      setDeepInspectPulse((value) => value + 1)
+      sounds.deepInspect(muted)
+    }
     setActiveClue(index)
     setCheckedClues((current) => current.includes(index) ? current : [...current, index])
     sounds.clueOpen(muted)
-  }, [muted, phase, suspended])
+  }, [checkedClues, muted, phase, suspended])
 
   const closeClue = useCallback(() => {
     if (activeClue === null) return
@@ -85,9 +106,13 @@ export function useMidnightVerdict() {
     submissionLock.current = true
     const isCorrect = viaManager || verdict === currentCustomer.identity
     const comboBonus = isCorrect && !viaManager ? Math.min(streak * 25, 100) : 0
-    const earned = viaManager ? 0 : isCorrect ? 100 + Math.floor(timeLeft) * 5 + comboBonus : 0
+    const timeBonus = Math.min(ROUND_SECONDS, Math.floor(timeLeft)) * 5
+    const earned = viaManager ? 0 : isCorrect ? 100 + timeBonus + comboBonus : 0
     const nextStreak = isCorrect && !viaManager ? streak + 1 : 0
-    if (viaManager) setManagerUsed(true)
+    if (viaManager) {
+      setManagerUsed(true)
+      setManagerEverUsed(true)
+    }
     if (isCorrect && !viaManager) setCorrectCount((count) => count + 1)
     if (!isCorrect) setStrikes((count) => count + 1)
     setStreak(nextStreak)
@@ -103,9 +128,13 @@ export function useMidnightVerdict() {
         managerUsed: viaManager,
         scoreEarned: earned,
       })
+      if (!viaManager && isCorrect && currentIndex < deck.length - 1 && (nextStreak === 3 || nextStreak === 6)) {
+        setRewardPending(true)
+        sounds.reward(muted)
+      }
       setPhase('reveal')
     }, 140)
-  }, [currentCustomer, managerUsed, muted, phase, streak, suspended, timeLeft])
+  }, [currentCustomer, currentIndex, deck.length, managerUsed, muted, phase, streak, suspended, timeLeft])
 
   const finishShift = useCallback(() => {
     const failed = strikes >= 3
@@ -115,7 +144,7 @@ export function useMidnightVerdict() {
       served: currentIndex + 1,
       maxStreak,
       strikes,
-      managerUsed,
+      managerUsed: managerEverUsed,
       failed,
     }
     setSummary(nextSummary)
@@ -127,7 +156,16 @@ export function useMidnightVerdict() {
       // The current result remains visible when storage is unavailable.
     }
     setPhase('result')
-  }, [bestScore, correctCount, currentIndex, managerUsed, maxStreak, score, strikes])
+  }, [bestScore, correctCount, currentIndex, managerEverUsed, maxStreak, score, strikes])
+
+  const chooseReward = useCallback((choice: RewardChoice) => {
+    if (!rewardPending) return
+    if (choice === 'manager' && !managerUsed) return
+    if (choice === 'time') setNextRoundBonus(3)
+    else setManagerUsed(false)
+    setRewardPending(false)
+    sounds.reward(muted)
+  }, [managerUsed, muted, rewardPending])
 
   const advance = useCallback(() => {
     if (strikes >= 3 || currentIndex >= deck.length - 1) {
@@ -135,9 +173,10 @@ export function useMidnightVerdict() {
       return
     }
     setCurrentIndex((index) => index + 1)
-    resetCustomer()
+    resetCustomer(ROUND_SECONDS + nextRoundBonus)
+    setNextRoundBonus(0)
     setPhase('playing')
-  }, [currentIndex, deck.length, finishShift, resetCustomer, strikes])
+  }, [currentIndex, deck.length, finishShift, nextRoundBonus, resetCustomer, strikes])
 
   const restart = useCallback(() => {
     setPhase('start')
@@ -207,6 +246,10 @@ export function useMidnightVerdict() {
     streak,
     maxStreak,
     managerUsed,
+    nightRules,
+    rewardPending,
+    nextRoundBonus,
+    deepInspectPulse,
     muted,
     suspended,
     beginBriefing,
@@ -214,6 +257,7 @@ export function useMidnightVerdict() {
     openClue,
     closeClue,
     submitVerdict,
+    chooseReward,
     advance,
     restart,
     toggleMuted,

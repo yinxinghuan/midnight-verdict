@@ -1,11 +1,15 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Leaderboard, useGameScore } from '@shared/leaderboard'
+import type { LeaderboardEntry } from '@shared/leaderboard'
+import { telegramId, useGameEvent } from '@shared/runtime'
 import { useMidnightVerdict } from './hooks/useMidnightVerdict'
 import { locale, t } from './i18n'
-import { CloseIcon, MutedIcon, PhoneIcon, SearchIcon, SoundIcon } from './components/Icons'
+import { CloseIcon, MutedIcon, PhoneIcon, RankIcon, SearchIcon, SoundIcon } from './components/Icons'
 import type { ShiftSummary } from './types'
 import './MidnightVerdict.less'
 
 const asset = (name: string) => `${import.meta.env.BASE_URL}img/${name}`
+const POSTER_URL = 'https://yinxinghuan.github.io/midnight-verdict/poster.png'
 
 function gradeShift(summary: ShiftSummary): 'S' | 'A' | 'B' | 'C' | 'D' {
   let grade: 'S' | 'A' | 'B' | 'C' | 'D'
@@ -21,12 +25,75 @@ function gradeShift(summary: ShiftSummary): 'S' | 'A' | 'B' | 'C' | 'D' {
 
 export default function MidnightVerdict() {
   const game = useMidnightVerdict()
+  const { isInAigram, canRank, submitScore, fetchLeaderboard } = useGameScore()
+  const events = useGameEvent()
+  const [showLeaderboard, setShowLeaderboard] = useState(false)
+  const [leaderboardRows, setLeaderboardRows] = useState<LeaderboardEntry[]>([])
+  const preRunBestRef = useRef(0)
+  const submittedSummaryRef = useRef<ShiftSummary | null>(null)
   const customer = game.currentCustomer
   const roundedTime = Math.ceil(game.timeLeft)
   const warning = roundedTime <= 5
   const normalCustomer = customer.normalAsset
   const revealedCustomer = customer.revealedAsset ?? normalCustomer
   const activeClue = customer.clues.find((clue) => clue.id === game.activeClue)
+  const champion = leaderboardRows[0] ?? null
+
+  const refreshLeaderboard = useCallback(async () => {
+    if (!canRank) return []
+    const rows = await fetchLeaderboard()
+    setLeaderboardRows(rows)
+    return rows
+  }, [canRank, fetchLeaderboard])
+
+  useEffect(() => {
+    void refreshLeaderboard()
+  }, [refreshLeaderboard])
+
+  useEffect(() => {
+    if (game.phase === 'start') submittedSummaryRef.current = null
+    if (game.phase !== 'playing' || game.progress.current !== 1 || game.score !== 0) return
+    void refreshLeaderboard().then((rows) => {
+      const me = telegramId ? rows.find((row) => String(row.user_id) === String(telegramId)) : null
+      preRunBestRef.current = me?.score ?? 0
+    })
+  }, [game.phase, game.progress.current, game.score, refreshLeaderboard])
+
+  const sendBeatNotify = useCallback(async (myScore: number) => {
+    if (!canRank || !telegramId || myScore <= preRunBestRef.current) return
+    try {
+      const fresh = await refreshLeaderboard()
+      const meId = String(telegramId)
+      const beaten = fresh
+        .filter((row) => String(row.user_id) !== meId)
+        .filter((row) => row.score < myScore && row.score > preRunBestRef.current)
+        .sort((a, b) => b.score - a.score)[0]
+      if (!beaten) return
+      events.trigger('score_beat', {
+        actions: [{
+          type: 'notify',
+          target_user_id: String(beaten.user_id),
+          image: {
+            ref_url: POSTER_URL,
+            prompt: 'A pulp supernatural comic scene in a midnight convenience store as a clerk stamps a verdict.',
+          },
+          message: {
+            template: `{sender_name} just beat your record — ${Math.round(myScore)} pts on Midnight Verdict.`,
+            variables: ['sender_name'],
+          },
+        }],
+      })
+    } catch {
+      // Ranking and notifications never block the result screen.
+    }
+  }, [canRank, events, refreshLeaderboard])
+
+  useEffect(() => {
+    if (game.phase !== 'result' || !game.summary || submittedSummaryRef.current === game.summary) return
+    submittedSummaryRef.current = game.summary
+    if (game.summary.score <= 0) return
+    void submitScore(game.summary.score).then(() => sendBeatNotify(game.summary!.score))
+  }, [game.phase, game.summary, sendBeatNotify, submitScore])
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -65,6 +132,7 @@ export default function MidnightVerdict() {
             <p className="mv-start__copy">{t('start.copy')}</p>
             <button className="mv-button mv-button--primary" type="button" onPointerDown={game.beginBriefing}>{t('start.button')}</button>
             <small>{t('start.best')} · {game.bestScore.toString().padStart(4, '0')}</small>
+            <ChampionPill champion={champion} onOpen={() => setShowLeaderboard(true)} />
           </div>
         </section>
       )}
@@ -95,6 +163,10 @@ export default function MidnightVerdict() {
           </header>
 
           <div className="mv-scene">
+            <div className="mv-night-rules" aria-label={t('rules.title')}>
+              <strong>{t('rules.title')}</strong>
+              {game.nightRules.map((rule) => <span key={rule} title={t(`rules.${rule}`)}>{t(`rules.${rule}.short`)}</span>)}
+            </div>
             <div className="mv-scene__freezer" aria-hidden="true"><i/><i/><i/></div>
             <img className="mv-scene__customer mv-scene__customer--normal" src={asset(normalCustomer)} alt="" draggable={false}/>
             <img className="mv-scene__customer mv-scene__customer--revealed" src={asset(revealedCustomer)} alt="" draggable={false}/>
@@ -113,6 +185,7 @@ export default function MidnightVerdict() {
               </button>
             ))}
             {game.phase === 'reveal' && customer.identity === 'night' && <div className="mv-signal-tear" aria-hidden="true"/>}
+            {game.deepInspectPulse > 0 && <div className="mv-deep-cost" key={game.deepInspectPulse}>{t('clue.deepCost')}</div>}
           </div>
 
           <div className="mv-dialogue">
@@ -144,9 +217,20 @@ export default function MidnightVerdict() {
                 <p>{game.result.managerUsed ? t('reveal.manager') : t(customer.reasonKey)}</p>
                 <blockquote>{t(game.result.correct ? customer.correctReactionKey : customer.wrongReactionKey)}</blockquote>
                 <div className="mv-reveal__score">+{game.result.scoreEarned}</div>
-                <button className="mv-button mv-button--primary" type="button" onPointerDown={game.advance}>
-                  {game.isLastCustomer ? t('reveal.finishShift') : t('reveal.nextCustomer')}
-                </button>
+                {game.rewardPending ? (
+                  <div className="mv-reward">
+                    <strong>{t('reward.title')}</strong>
+                    <div>
+                      <button type="button" onClick={() => game.chooseReward('time')}>{t('reward.time')}</button>
+                      <button type="button" disabled={!game.managerUsed} onClick={() => game.chooseReward('manager')} title={!game.managerUsed ? t('reward.managerReady') : undefined}>{t('reward.manager')}</button>
+                    </div>
+                    {!game.managerUsed && <small>{t('reward.managerReady')}</small>}
+                  </div>
+                ) : (
+                  <button className="mv-button mv-button--primary" type="button" onPointerDown={game.advance}>
+                    {game.isLastCustomer ? t('reveal.finishShift') : t('reveal.nextCustomer')}
+                  </button>
+                )}
               </article>
             </div>
           )}
@@ -183,11 +267,25 @@ export default function MidnightVerdict() {
       )}
 
       {game.phase === 'result' && game.summary && (
-        <ResultScreen summary={game.summary} bestScore={game.bestScore} muted={game.muted} onToggleMuted={game.toggleMuted} onRestart={game.restart}/>
+        <ResultScreen summary={game.summary} bestScore={game.bestScore} muted={game.muted} champion={champion} onOpenLeaderboard={() => setShowLeaderboard(true)} onToggleMuted={game.toggleMuted} onRestart={game.restart}/>
       )}
+
+      {showLeaderboard && <Leaderboard gameName={t('title')} isInAigram={isInAigram} onClose={() => setShowLeaderboard(false)} fetch={fetchLeaderboard} />}
 
       <img className="mv__watermark" src={asset('aigram.svg')} alt="" draggable={false}/>
     </main>
+  )
+}
+
+function ChampionPill({ champion, onOpen }: { champion: LeaderboardEntry | null; onOpen: () => void }) {
+  return (
+    <button className="mv-champion" type="button" onClick={onOpen} aria-label={t('leaderboard.open')}>
+      <span className="mv-champion__avatar" aria-hidden>
+        {champion?.avatar_url ? <img src={champion.avatar_url} alt="" draggable={false} /> : champion ? champion.name.charAt(0).toUpperCase() : <RankIcon />}
+      </span>
+      <span className="mv-champion__copy"><small>{champion ? t('leaderboard.champion') : t('leaderboard.entry')}</small><strong>{champion?.name ?? t('leaderboard.fallback')}</strong></span>
+      {champion && <b>{champion.score.toLocaleString()}</b>}
+    </button>
   )
 }
 
@@ -195,11 +293,13 @@ interface ResultScreenProps {
   summary: ShiftSummary
   bestScore: number
   muted: boolean
+  champion: LeaderboardEntry | null
+  onOpenLeaderboard: () => void
   onToggleMuted: () => void
   onRestart: () => void
 }
 
-function ResultScreen({ summary, bestScore, muted, onToggleMuted, onRestart }: ResultScreenProps) {
+function ResultScreen({ summary, bestScore, muted, champion, onOpenLeaderboard, onToggleMuted, onRestart }: ResultScreenProps) {
   const grade = gradeShift(summary)
   return (
     <section className="mv-result">
@@ -222,6 +322,7 @@ function ResultScreen({ summary, bestScore, muted, onToggleMuted, onRestart }: R
         </dl>
         {summary.managerUsed && <p className="mv-result__penalty">{t('result.managerPenalty')}</p>}
         <p className="mv-result__comment">{t(`result.comment${grade}`)}</p>
+        <ChampionPill champion={champion} onOpen={onOpenLeaderboard} />
         <div className="mv-barcode" aria-hidden="true" />
         <button className="mv-button mv-button--primary" type="button" onPointerDown={onRestart}>{t('result.again')}</button>
       </article>

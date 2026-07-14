@@ -37,6 +37,9 @@ export const sounds = {
   clueClose(muted: boolean) {
     if (!muted) tone(520, 420, 0.07, 'sine', 0.07)
   },
+  deepInspect(muted: boolean) {
+    if (!muted) tone(310, 220, 0.09, 'square', 0.07)
+  },
   stamp(muted: boolean) {
     if (!muted) tone(180, 95, 0.09, 'triangle', 0.12)
   },
@@ -52,5 +55,10 @@ export const sounds = {
   tick(muted: boolean) {
     if (!muted) tone(880, 880, 0.045, 'square', 0.045)
   },
+  reward(muted: boolean) {
+    if (muted) return
+    tone(523, 523, 0.065, 'triangle', 0.08)
+    tone(659, 659, 0.065, 'triangle', 0.09, 0.075)
+    tone(784, 784, 0.08, 'triangle', 0.1, 0.15)
+  },
 }
-
