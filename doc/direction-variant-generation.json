@@ -1,0 +1,40 @@
+{
+  "endpoint": "https://chat.aiwaves.tech/aigram/api/gen-image",
+  "origin": "https://aigram.app",
+  "generated_at": "2026-07-14T10:00:47.333351+00:00",
+  "anchor_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784022472890186.webp",
+  "assets": [
+    {
+      "direction": "B",
+      "state": "normal",
+      "file": "public/img/customer-mira-b-normal.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023182093593.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784022472890186.webp",
+      "prompt": "Transform the reference into a late-1990s analog convenience-store surveillance-camera still. Preserve Mira as the same adult woman, navy work jacket, soup bowl and thermal receipt. Ceiling-corner CCTV viewpoint with a moderate 28mm wide-angle perspective, slightly high camera, monochrome phosphor green and dirty grey palette, crushed blacks, fluorescent light bloom, subtle horizontal scan lines, low frame-rate motion echo, practical store shelves and freezer, tense empty night. The image remains readable at phone size, her face and hands are clear, the counter is clean, and the frame feels like authentic security footage from a quiet family-friendly supernatural mystery. Square frame."
+    },
+    {
+      "direction": "B",
+      "state": "revealed",
+      "file": "public/img/customer-mira-b-revealed.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023204593171.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023182093593.webp",
+      "prompt": "Preserve the exact same surveillance camera, Mira, navy jacket, soup bowl, receipt and store composition from the reference. Create the supernatural reveal as a single corrupted CCTV frame: her freezer reflection is delayed and faces the wrong direction, a second pale phosphor silhouette sits three frames behind her, and one horizontal tracking tear crosses the background. Her expression stays calm and dryly amused. Monochrome phosphor green, dirty grey, crushed blacks, restrained analog noise, clear phone-size silhouette, quiet family-friendly mystery, clean counter, square frame."
+    },
+    {
+      "direction": "C",
+      "state": "normal",
+      "file": "public/img/customer-mira-c-normal.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023219377048.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784022472890186.webp",
+      "prompt": "Transform the reference into a bold adult supernatural graphic-novel panel. Preserve Mira as the same adult woman, navy work jacket, soup bowl, thermal receipt and convenience-store counter. Strong dry-brush black ink contours, visible hand-drawn hatching, coarse halftone dots, off-register screenprint edges, realistic adult proportions, expressive but restrained face. Limited palette of deep aubergine, warm paper cream, acid yellow and a tiny vermilion accent. Flat theatrical composition, clear at phone size, authored indie comic, square panel."
+    },
+    {
+      "direction": "C",
+      "state": "revealed",
+      "file": "public/img/customer-mira-c-revealed.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023236582637.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023219377048.webp",
+      "prompt": "Preserve the exact same graphic-novel Mira, navy jacket, soup bowl, receipt, counter, camera and limited palette from the reference. Create the supernatural reveal as a dramatic comic panel: her heavy black shadow separates from her body and pushes beyond a broken panel border, the freezer reflection is an empty halftone silhouette, and acid-yellow impact rays converge on the receipt. Her expression is wry and calm. Deep aubergine, paper cream, acid yellow and vermilion, thick dry-brush ink, coarse halftone, energetic but family-friendly, square panel."
+    }
+  ]
+}

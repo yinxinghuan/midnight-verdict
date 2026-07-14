@@ -1,0 +1,9 @@
+{
+  "endpoint": "https://chat.aiwaves.tech/aigram/api/gen-image",
+  "origin": "https://aigram.app",
+  "generated_at": "2026-07-14T10:33:22.460457+00:00",
+  "file": "public/poster.png",
+  "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784025196592049.webp",
+  "prompt": "Square 1024x1024 professional narrative game poster in a bold adult supernatural pulp comic style. Inside a pristine late-night convenience store, a tired ordinary-looking female customer in a bright yellow raincoat stands centered under fluorescent light, while her enormous impossible black shadow splits into five different customer silhouettes on the teal freezer wall behind her. In the lower foreground, two clean graphic decision placards angle toward her like a choice: an acid-yellow card reading HUMAN on the left and a deep aubergine card reading NIGHT GUEST on the right. A narrow cream receipt separates the two cards. Strong dry-brush black ink contours, coarse halftone dots, hand-drawn hatching, slightly off-register screenprint, deep aubergine, warm paper cream, acid yellow and counter green. Crisp editorial layout with large unbroken flat-color areas and a clean cream lower border. Clear central face and decision conflict readable at thumbnail size, uncanny, clever and family-friendly. Put the exact large readable English title MIDNIGHT VERDICT across the top 22 percent in two lines, heavy condensed cream block lettering with black outline. Keep the bottom 18 percent as a simple clean cream border. No other words, no logo, no watermark, no UI screenshot, no 3D render, no photorealism.",
+  "source_type": "Aigram transit raster generation"
+}
