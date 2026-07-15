@@ -40,6 +40,7 @@ export function useMidnightVerdict() {
   const submissionLock = useRef(false)
   const lastTick = useRef(ROUND_SECONDS)
   const currentCustomer = deck[currentIndex]
+  const nextCustomer = deck[currentIndex + 1] ?? null
 
   const resetCustomer = useCallback((seconds = ROUND_SECONDS) => {
     setTimeLeft(seconds)
@@ -232,6 +233,7 @@ export function useMidnightVerdict() {
     phase,
     briefingStep,
     currentCustomer,
+    nextCustomer,
     progress,
     isLastCustomer,
     timeLeft,

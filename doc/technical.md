@@ -43,7 +43,7 @@ scripts/                         # Aigram transit 制作期素材脚本
 - 防重复与恢复：`submissionLock` 在首次 Pointer 判断同步上锁，避免双触发；`visibilitychange` 在切后台时进入 `suspended`，玩家必须主动继续。
 - 屏幕适配：主体最大宽度为 430 px，手机内部重排；320×568 使用紧凑规则，桌面端居中显示，不使用整页 `transform` 缩放。
 - 视觉与揭晓：C 方向是默认常态；夜客进入 `reveal` 时仅播放一次 420 ms 的 B 横向信号撕裂，然后展示角色揭晓图和漫画结果格；`prefers-reduced-motion` 会将动画压缩为静态变化。
-- 开屏与预加载：开始页直接显示 `public/poster.png` 作为叙事主视觉；组件挂载后用独立 `Image` 对象预取全部常态与揭晓图片。`CustomerPortrait` 以顾客 ID 作为 React `key`，换客时旧节点立即卸载，新图 `load/error` 前由 `mv-customer-load` 卷帘完全覆盖场景。
+- 开屏与预加载：开始页直接显示 `public/poster.png` 作为叙事主视觉；只用独立 `Image` 对象预取当前与下一位顾客的常态/揭晓图片，避免 WebView 一次解码 17 张大图。`CustomerPortrait` 以顾客 ID 作为 React `key`，换客时旧节点立即卸载；卷帘通过 `load/error`、缓存图片的 `complete`、`decode()` Promise 或 1.2 秒保险任一路解除。
 - 音频与多语言：`sounds.ts` 按线索、深查扣时、奖励、盖章、正确、错误和最后 5 秒映射振荡器音色；`i18n/index.ts` 承担所有可见中文与英文文案。
 - 排行榜：`useGameScore()` 读取与提交 UUID `ddaef39e-5766-4db8-b13d-642ee08ae318` 的最高分；开始页和结算页展示冠军入口，完整榜单显示头像/名字/本人标识，其他玩家行通过 `openAigramProfile()` 打开主页，站外不请求榜单并显示 AlterU CTA。
 - 被超越通知：开局异步快照玩家旧最高分，结算提交新分后重拉榜单，只向 `旧最高分 < 对手分 < 新分` 中最高的一位发送 `score_beat`；使用公网正式海报作为通知图，所有失败静默。

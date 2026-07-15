@@ -1,8 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Leaderboard, useGameScore } from '@shared/leaderboard'
 import type { LeaderboardEntry } from '@shared/leaderboard'
 import { telegramId, useGameEvent } from '@shared/runtime'
-import { CUSTOMERS } from './customers'
 import { useMidnightVerdict } from './hooks/useMidnightVerdict'
 import { locale, t } from './i18n'
 import { CloseIcon, MutedIcon, PhoneIcon, RankIcon, SearchIcon, SoundIcon } from './components/Icons'
@@ -53,14 +52,15 @@ export default function MidnightVerdict() {
   }, [refreshLeaderboard])
 
   useEffect(() => {
-    const sources = CUSTOMERS.flatMap((item) => [item.normalAsset, item.revealedAsset].filter(Boolean) as string[])
-    const preloaders = sources.map((source) => {
+    const sources = [game.currentCustomer, game.nextCustomer]
+      .filter(Boolean)
+      .flatMap((item) => [item!.normalAsset, item!.revealedAsset])
+      .filter(Boolean) as string[]
+    sources.forEach((source) => {
       const image = new Image()
       image.src = asset(source)
-      return image
     })
-    return () => preloaders.forEach((image) => { image.onload = null; image.onerror = null })
-  }, [])
+  }, [game.currentCustomer, game.nextCustomer])
 
   useEffect(() => {
     if (game.phase === 'start') submittedSummaryRef.current = null
@@ -287,8 +287,23 @@ export default function MidnightVerdict() {
 
 function CustomerPortrait({ normal, revealed }: { normal: string; revealed: string }) {
   const [ready, setReady] = useState(false)
+  const imageRef = useRef<HTMLImageElement>(null)
+
+  useLayoutEffect(() => {
+    let alive = true
+    const node = imageRef.current
+    const settle = () => { if (alive) setReady(true) }
+    const timeout = window.setTimeout(settle, 1200)
+    if (node?.complete) settle()
+    else if (node?.decode) void node.decode().then(settle).catch(() => {})
+    return () => {
+      alive = false
+      window.clearTimeout(timeout)
+    }
+  }, [normal])
+
   return <>
-    <img className="mv-scene__customer mv-scene__customer--normal" src={asset(normal)} alt="" draggable={false} onLoad={() => setReady(true)} onError={() => setReady(true)} />
+    <img ref={imageRef} className="mv-scene__customer mv-scene__customer--normal" src={asset(normal)} alt="" draggable={false} onLoad={() => setReady(true)} onError={() => setReady(true)} />
     <img className="mv-scene__customer mv-scene__customer--revealed" src={asset(revealed)} alt="" draggable={false} />
     <div className={`mv-customer-load ${ready ? 'is-ready' : ''}`} aria-hidden="true"><span>{t('shift.nextCustomer')}</span></div>
   </>
