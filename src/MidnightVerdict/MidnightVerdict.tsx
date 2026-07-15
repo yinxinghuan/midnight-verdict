@@ -30,6 +30,7 @@ export default function MidnightVerdict() {
   const events = useGameEvent()
   const [showLeaderboard, setShowLeaderboard] = useState(false)
   const [leaderboardRows, setLeaderboardRows] = useState<LeaderboardEntry[]>([])
+  const [showNightReport, setShowNightReport] = useState(false)
   const preRunBestRef = useRef(0)
   const submittedSummaryRef = useRef<ShiftSummary | null>(null)
   const customer = game.currentCustomer
@@ -39,6 +40,11 @@ export default function MidnightVerdict() {
   const revealedCustomer = customer.revealedAsset ?? normalCustomer
   const activeClue = customer.clues.find((clue) => clue.id === game.activeClue)
   const champion = leaderboardRows[0] ?? null
+  const isNightImageHold = game.phase === 'reveal' && customer.identity === 'night' && !showNightReport
+
+  useEffect(() => {
+    setShowNightReport(false)
+  }, [customer.id])
 
   const refreshLeaderboard = useCallback(async () => {
     if (!canRank) return []
@@ -217,7 +223,22 @@ export default function MidnightVerdict() {
             </div>
           )}
 
-          {game.phase === 'reveal' && game.result && (
+          {isNightImageHold && game.result && (
+            <div className="mv-night-hold" role="dialog" aria-modal="true" aria-labelledby="mv-night-hold-title">
+              <div className="mv-night-hold__panel">
+                <div className="mv-night-hold__copy">
+                  <span>{t('reveal.anomalyCaptured')}</span>
+                  <h2 id="mv-night-hold-title">{t(customer.identityKey)}</h2>
+                  <p>{t('reveal.holdCopy')}</p>
+                </div>
+                <button className="mv-night-hold__button" type="button" onClick={() => setShowNightReport(true)}>
+                  {t('reveal.readReport')}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {game.phase === 'reveal' && game.result && !isNightImageHold && (
             <div className="mv-reveal" role="status">
               <article className="mv-paper mv-reveal__paper">
                 <span className={`mv-reveal__stamp ${game.result.correct ? 'is-correct' : 'is-wrong'}`}>{game.result.correct ? t('reveal.correct') : t('reveal.wrong')}</span>
