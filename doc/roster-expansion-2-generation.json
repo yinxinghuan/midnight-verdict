@@ -1,0 +1,137 @@
+{
+  "endpoint": "https://chat.aiwaves.tech/aigram/api/gen-image",
+  "origin": "https://aigram.app",
+  "generated_at": "2026-07-15T11:20:26.714534+00:00",
+  "style_anchor_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023219377048.webp",
+  "assets": [
+    {
+      "id": "ivo",
+      "state": "normal",
+      "file": "public/img/customers/ivo-normal.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114160276525.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023219377048.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. Ivo, a tall older Balkan night-bus conductor with a neat grey moustache, navy transit coat and worn leather satchel, holding an orange ticket punch, paper timetable and metal thermos, stern but gentle expression."
+    },
+    {
+      "id": "grace",
+      "state": "normal",
+      "file": "public/img/customers/grace-normal.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114180966700.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023219377048.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. Grace, a statuesque Black funeral florist in her forties, elegant charcoal coat with a cream scarf, holding white lilies tied with black ribbon and a small bag of lemon candy, composed warm expression."
+    },
+    {
+      "id": "sol",
+      "state": "normal",
+      "file": "public/img/customers/sol-normal.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114196283900.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023219377048.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. Sol, a young East Asian radio repairer with an undercut and round headphones around the neck, rust-red utility jacket, holding a small analog radio, copper wire coil and batteries, curious focused expression."
+    },
+    {
+      "id": "yuki",
+      "state": "normal",
+      "file": "public/img/customers/yuki-normal.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114217476392.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023219377048.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. Yuki, a sturdy Japanese ice sculptor in her fifties, blue insulated work coat and knitted headband, holding a bag of salt, blue gloves and a small thermometer, calm practical expression."
+    },
+    {
+      "id": "dalia",
+      "state": "normal",
+      "file": "public/img/customers/dalia-normal.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114233685083.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023219377048.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. Dalia, a petite Latina sleep-lab technician in her thirties, lilac cardigan over clinical scrubs, holding several sleep masks, electrode pads and chamomile tea, alert despite obvious exhaustion."
+    },
+    {
+      "id": "ravi",
+      "state": "normal",
+      "file": "public/img/customers/ravi-normal.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114250883373.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023219377048.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. Ravi, a broad South Asian stage-lighting technician with a trimmed beard, black work shirt and harness, holding colored lighting gels, black gaffer tape and a compact flashlight, cheerful theatrical expression."
+    },
+    {
+      "id": "chen",
+      "state": "normal",
+      "file": "public/img/customers/chen-normal.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114272377753.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023219377048.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. Mr Chen, an elderly Chinese clock repairer with swept-back white hair and a brown cardigan under a green apron, holding two alarm clocks, tiny watch gears and canned coffee, patient meticulous expression."
+    },
+    {
+      "id": "leila",
+      "state": "normal",
+      "file": "public/img/customers/leila-normal.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114288599253.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023219377048.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. Leila, a Middle Eastern beekeeper in her forties with a folded protective hood over a mustard work jacket, holding a sugar bag and a small amber honey jar, relaxed confident expression."
+    },
+    {
+      "id": "vacancy",
+      "state": "normal",
+      "file": "public/img/customers/vacancy-normal.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114304166123.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023219377048.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. The Vacancy Bellhop, a slim adult hotel porter in an immaculate old-fashioned plum uniform with brass buttons and cap, holding one blank brass room key and a small cream suitcase, welcoming expression held slightly too long."
+    },
+    {
+      "id": "vacancy",
+      "state": "revealed",
+      "file": "public/img/customers/vacancy-revealed.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114320369277.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114304166123.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. Preserve this exact character, face, uniform, pose, camera and store composition. The open suitcase contains a full hotel corridor receding far beyond its physical depth, every door marked by a blank brass plate; the room key casts the shadow of an open doorway, and the freezer reflection becomes a hotel elevator with no floor buttons. The corridor breaks the comic panel edge with acid-yellow perspective rays. Elegant, nonviolent, family-friendly supernatural reveal; no gore and no readable text."
+    },
+    {
+      "id": "wax",
+      "state": "normal",
+      "file": "public/img/customers/wax-normal.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114336182781.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023219377048.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. The Wax Guest, an older androgynous candle restorer with a smooth shaved head, burgundy workshop smock and cream gloves, holding three unlit candles and a round tin of pale wax, serene museum-conservator expression."
+    },
+    {
+      "id": "wax",
+      "state": "revealed",
+      "file": "public/img/customers/wax-revealed.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784115196089541.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114336182781.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. STRICT CHARACTER CONTINUITY: preserve the exact same older androgynous candle restorer from the reference, including the completely bald smooth shaved head with absolutely no hair, same long narrow face, eyes, nose, burgundy workshop smock, cream gloves, pose, hands, three candles, wax tin, camera and store composition. Pale wax streams upward from the counter into the unlit candles. Each wick casts a flame-shaped black shadow despite producing no light. The smock edge becomes sculpted wax folds, non-gory. Acid-yellow heat lines point upward and one black wax silhouette breaks the panel border. Calm family-friendly supernatural reveal, no text.",
+      "regenerated_at": "2026-07-15T11:33:28.238557+00:00"
+    },
+    {
+      "id": "tide",
+      "state": "normal",
+      "file": "public/img/customers/tide-normal.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114370756649.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023219377048.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. The Tide Guest, a weathered adult sailor in a dry dark-green pea coat and cream watch cap, holding coiled rope, a sealed glass of water and a packet of crackers, quiet distant expression."
+    },
+    {
+      "id": "tide",
+      "state": "revealed",
+      "file": "public/img/customers/tide-revealed.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114385276593.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114370756649.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. Preserve this exact character, face, wardrobe, pose, camera and store composition. A suspended wall of dark teal seawater curves behind the sailor inside the dry store, wet footprints appear ahead of the person toward the counter, and the sealed glass contains a tiny tide rising and falling sideways. Rope floats weightlessly and acid-yellow foam lines break the upper comic border. Nonviolent, family-friendly supernatural reveal; no gore and no readable text."
+    },
+    {
+      "id": "blank",
+      "state": "normal",
+      "file": "public/img/customers/blank-normal.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114401384570.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784023219377048.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. The Blank Auditor, a precise adult inventory inspector with warm brown skin, close natural hair, cream shirt and deep aubergine vest, holding a handheld label gun and one plain unmarked grocery box, neutral professional expression."
+    },
+    {
+      "id": "blank",
+      "state": "revealed",
+      "file": "public/img/customers/blank-revealed.jpg",
+      "url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114418081248.webp",
+      "ref_url": "https://cdn.aiwaves.tech/prod/telegram/avatar/0/1784114401384570.webp",
+      "prompt": "Use the reference only for art direction, cashier-eye-level camera, convenience-store composition, line weight, halftone density and limited screenprint palette. Create a clearly different adult person with a distinct face, age, body shape, hair, clothing and pose. Bold adult supernatural graphic-novel panel, realistic adult proportions, strong dry-brush black ink contours, hand-drawn hatching, coarse halftone, off-register screenprint, deep aubergine, warm paper cream, acid yellow, counter green and a tiny vermilion accent. Waist-up customer behind the same clean convenience-store counter, readable face, hands and held objects, square 1024 panel, quiet family-friendly mystery, no readable text, no logo, no watermark. Preserve this exact character, face, wardrobe, pose, camera and store composition. Long black barcode bands peel off the label gun and erase small rectangular sections of shelves behind them into flat paper-white voids; the plain box casts no object shadow but instead a missing square in the counter halftone. Acid-yellow registration marks point to the erased regions and one barcode tears across the panel edge. Graphic, nonviolent, family-friendly supernatural reveal; no readable text or numbers."
+    }
+  ]
+}
